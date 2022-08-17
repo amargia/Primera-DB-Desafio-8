@@ -1,36 +1,63 @@
-const data = [];
-let id = 0;
+const { options } = require('./database/options/mariaDB');
+const knex = require('knex')(options)
 
-const list = () => {
-  return data;
+const list = async () => {
+  try {
+    const productos = await knex
+    .from("productos")
+    .select('*')
+    .orderBy('price', 'desc');
+    return productos;
+  } catch (error) {
+    throw new Error("No hay productos en DB" , error);
+  }
 };
 
-const findOne = (id) => {
-  return data.find((product) => product.id === id);
+const getById = async (id) => {
+  try {
+    const producto = await knex
+    .from('productos') 
+    .select('*') 
+    .where({ id }) 
+    .then((data) => { 
+      return data;
+    }).catch((error) => {    
+      throw new Error('Producto no encontrado', error)
+    });
+  } catch (error) {
+    throw new Error('Producto no encontrado', error)
+  } 
+} 
+
+const add = (product) => {
+  try {
+    knex('productos')
+    .insert(product)
+    .then(() => {
+      return ('Producto ingresado existosamente')
+    }).catch ((error) => {
+        throw new Error ('Producto no se pudo ingresar', error)
+    })
+  } finally {
+      knex.destroy
+  }
+}
+
+const deleteById = (id) => {
+  try {
+    knex
+    .from('productos')
+    .where('id', '=' , i)
+    .del()
+    .then(() => {
+      return ('Producto eliminado exitosamente')
+    }).catch((error) => {
+      throw new Error ('Producto no se pudo eliminar', error)
+    })
+  } finally {
+    knex.destroy
+  }
 };
 
-const add = (title, price, thumbnail) => {
-  const product = { id: ++id, title, price, thumbnail };
-  data.push(product);
-  return product;
-};
 
-const findAllMatch = (title) => {
-  const newArr = data.filter((product) => product.title === title);
-  return newArr;
-};
-
-const remove = (id) => {
-  data.forEach((product, i) => {
-    if (product.id === id) data.splice(i, 1);
-  });
-};
-
-const update = ({id}, newProduct) => {
-  const data = findOne(parseInt(id));
-    data.title = newProduct.title;
-    data.price = newProduct.price;
-    data.thumbnail = newProduct.thumbnail;
-};
-
-module.exports = { list, findOne, add, findAllMatch, remove, update };
+module.exports = { list, getById, add, deleteById };

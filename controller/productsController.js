@@ -12,14 +12,13 @@ class Contenedor {
     return prod;
   }
 
-  static update(id, newProduct) {
-    const updateProd = methodBank.update(id, newProduct)
-    return updateProd;
+  static delete(id) {
+    const deleteProd = methodBank.deleteById(id);
+    return deleteProd;
   }
 
-  static delete(id) {
-    const deleteProd = methodBank.remove(id);
-    return deleteProd;
+  static getById(id) {
+    return methodBank.getById(id)
   }
 }
 
