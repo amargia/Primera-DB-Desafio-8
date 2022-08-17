@@ -1,4 +1,4 @@
-const { options } = require('./database/options/sqlite3DB');
+const { options } = require('../database/options/sqlite3DB');
 const knex = require('knex')(options);
 
 const list = async () => {

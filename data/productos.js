@@ -1,4 +1,4 @@
-const { options } = require('./database/options/mariaDB');
+const { options } = require('../database/options/mariaDB');
 const knex = require('knex')(options)
 
 const list = async () => {
