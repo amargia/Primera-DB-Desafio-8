@@ -3,12 +3,15 @@ const knex = require('knex')(options);
 
 const list = async () => {
     try {
-        const mensajes = await knex
-        .from('chat')
-        .select('*');
-        return mensajes
-    } catch (error) {
-        throw new Error ('No se pueden mostrar los mensajes', error)
+        const mensajes = await knex('chat')
+        .select('*')
+        .then(() => {
+            return mensajes
+        }).catch ((error) => {
+            throw new Error ('No se pueden mostrar los mensajes', error)
+        })
+    } finally {
+        knex.destroy
     }
 }
 

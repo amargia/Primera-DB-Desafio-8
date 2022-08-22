@@ -5,8 +5,10 @@ const productsList = Router();
 const Contenedor = require("../controller/productsController")
 
 productsList.get("/", (req, res) => {
-  const productos = Contenedor.getAll()
-  res.status(200).json(productos); 
+  Contenedor.getAll()
+  .then((data) => {
+    res.status(200).send(data); 
+  })
 });
 
 

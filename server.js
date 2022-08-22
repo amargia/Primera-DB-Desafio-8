@@ -2,14 +2,15 @@ const chat = require('./data/chat')
 
 const express = require("express");
 const app = express();
-const fetch = require('node-fetch');
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
-const router = require("./routes") 
+const router = require("./routes"); 
+const products = require('./routes/productRouter');
+const productsList = require('./routes/productListRouter');
 
 app.set('views', './views');
 app.set('view engine', 'ejs');
@@ -27,7 +28,7 @@ io.on('connection', async function(socket) {
   const messages = await chat.list();
   socket.emit('messages', messages);
 
-  io.sockets.emit('productos'); 
+  io.sockets.emit('productos', html); 
   
   socket.on('new-message', async function (data) {
     try {

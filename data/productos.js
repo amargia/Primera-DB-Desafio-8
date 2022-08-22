@@ -10,6 +10,8 @@ const list = async () => {
     return productos;
   } catch (error) {
     throw new Error("No hay productos en DB" , error);
+  } finally {
+    knex.destroy
   }
 };
 
@@ -24,8 +26,8 @@ const getById = async (id) => {
     }).catch((error) => {    
       throw new Error('Producto no encontrado', error)
     });
-  } catch (error) {
-    throw new Error('Producto no encontrado', error)
+  } finally {
+    knex.destroy
   } 
 } 
 
