@@ -20,7 +20,7 @@ const getById = async (id) => {
     const producto = await knex
     .from('productos') 
     .select('*') 
-    .where({ id }) 
+    .where('id', id) 
     .then((data) => { 
       return data;
     }).catch((error) => {    
