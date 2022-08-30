@@ -28,7 +28,7 @@ io.on('connection', async function(socket) {
   const messages = await chat.list();
   socket.emit('messages', messages);
 
-  io.sockets.emit('productos', html); 
+  io.sockets.emit('productos'); 
   
   socket.on('new-message', async function (data) {
     try {
