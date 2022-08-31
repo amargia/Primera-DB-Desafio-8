@@ -20,7 +20,7 @@ const add = async (mensaje) => {
                 throw new Error('Error al enviar mensaje', error)
             })
     } finally {
-        knex.destroy
+        knex.destroy();
     }
 }
 

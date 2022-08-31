@@ -11,7 +11,7 @@ const list = async () => {
   } catch (error) {
     throw new Error("No hay productos en DB" , error);
   } finally {
-    knex.destroy
+    knex.destroy();
   }
 };
 
@@ -27,21 +27,22 @@ const getById = async (id) => {
       throw new Error('Producto no encontrado', error)
     });
   } finally {
-    knex.destroy
+    knex.destroy();
   } 
 } 
 
-const add = (product) => {
+const add = async (product) => {
   try {
-    knex('productos')
+    await knex
     .insert(product)
+    .into('productos')
     .then(() => {
       return ('Producto ingresado existosamente')
     }).catch ((error) => {
         throw new Error ('Producto no se pudo ingresar', error)
     })
   } finally {
-      knex.destroy
+      knex.destroy();
   }
 }
 
@@ -57,7 +58,7 @@ const deleteById = (id) => {
       throw new Error ('Producto no se pudo eliminar', error)
     })
   } finally {
-    knex.destroy
+    knex.destroy();
   }
 };
 
