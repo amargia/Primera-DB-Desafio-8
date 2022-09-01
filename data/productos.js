@@ -17,7 +17,7 @@ const list = async () => {
 
 const getById = async (id) => {
   try {
-    const producto = await knex
+    await knex
     .from('productos') 
     .select('*') 
     .where('id', id) 
@@ -50,7 +50,7 @@ const deleteById = (id) => {
   try {
     knex
     .from('productos')
-    .where('id', '=' , i)
+    .where('id', '=' , id)
     .del()
     .then(() => {
       return ('Producto eliminado exitosamente')
