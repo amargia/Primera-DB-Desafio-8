@@ -12,8 +12,9 @@ const list = async () => {
 
 const add = async (mensaje) => {
     try {
-        knex('chat')
+        await knex
             .insert(mensaje)
+            .into('chat')
             .then(() => {
                 return ('Mensaje enviado existosamente')
             }).catch((error) => {
