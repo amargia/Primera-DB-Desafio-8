@@ -1,6 +1,9 @@
 const socket = io.connect();
 
-function renderProducts(data) {  
+function renderProducts() {
+    fetch('http://localhost:8080/lista-productos')
+    .then(response => response.json())
+    .then((data) => {
     const html = data.map((el, index) => {   
         return(
             `<tr>
@@ -11,6 +14,7 @@ function renderProducts(data) {
         )
     }).join(" ");
     document.getElementById('tbodyList').innerHTML = html;
+    })
 }
 
 
@@ -25,17 +29,15 @@ function renderMessages(data) {
 }
 
 
-function addMessage(e) {
+function addMessage() {
     const mensaje = {
         email: document.getElementById('mail').value,
         fecha: `${(new Date).toLocaleDateString()} - ${(new Date).toLocaleTimeString()}`,
         mensaje: document.getElementById('mensaje').value
     };  
-    socket.emit('new-message', mensaje);
+    socket.emit('newMessage', mensaje);
     return false;
 }
 
-
-
-socket.on('productos', function(data) { renderProducts(data); });
+socket.on('productos', function() { renderProducts(); });
 socket.on('messages', function(data) { renderMessages(data); });

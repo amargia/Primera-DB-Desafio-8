@@ -3,25 +3,22 @@ const knex = require('knex')(options);
 
 const list = async () => {
     try {
-        const mensajes = await knex('chat').select('*');
+        const mensajes = await knex('chats').select('*');
         return mensajes;
     } catch (err) {
         throw new Error('No se pueden leer los mensajes', err)
     }
 }
 
-const add = async (mensaje) => {
+const add = (mensaje) => {
     try {
-        await knex
-            .insert(mensaje)
-            .into('chat')
-            .then(() => {
-                return ('Mensaje enviado existosamente')
-            }).catch((error) => {
-                throw new Error('Error al enviar mensaje', error)
-            })
-    } finally {
-        knex.destroy();
+        knex('chats')
+        .insert(mensaje)
+        .then(() => {
+        return ('Mensaje enviado existosamente')
+        })
+    } catch (error) {
+        throw new Error('Error mensaje no enviado' + error)
     }
 }
 

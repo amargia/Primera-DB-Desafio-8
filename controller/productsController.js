@@ -8,7 +8,7 @@ class Contenedor {
   }
 
   static create(title, price, thumbnail) {
-    const prod = methodBank.add(title, price, thumbnail);
+    const prod = methodBank.add({title, price, thumbnail});
     return prod;
   }
 
